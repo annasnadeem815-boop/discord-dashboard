@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Discord Bot Dashboard</title>
+</head>
+<body>
+<h1>Bot Dashboard</h1>
+<button onclick="login()">Login with Discord</button>
+
+<ul id="guilds"></ul>
+
+<script>
+const CLIENT_ID = "1462867856919101564";
+const REDIRECT_URI = "https://your-pages-url.pages.dev/auth/callback"; // replace after Pages deploy
+
+function login() {
+  const url = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=code&scope=identify%20guilds`;
+  window.location.href = url;
+}
+
+// Example API call with password fallback
+async function purgeGuild(guildId) {
+  const channelId = prompt("Enter Channel ID");
+  const amount = prompt("Number of messages to delete");
+
+  const res = await fetch("https://your-railway-api-url/purge", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      guildId,
+      channelId,
+      amount: parseInt(amount),
+      password: "MAnnasNad1"
+    })
+  });
+
+  const data = await res.json();
+  alert(JSON.stringify(data));
+}
+</script>
+</body>
+</html>
